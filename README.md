@@ -1,6 +1,14 @@
 ## git-paca
 
-Dogfooding a summarization on the initial commit:
+Installation: `go install github.com/Aperocky/git-paca@latest`
+
+Running: `git-paca $git_command (summarize|review|commitmsg)`
+
+For instance: `git-paca diff review`, `git-paca diff commitmsg`
+
+### Dogfooding Showcase
+
+Commit messages for this package will come from itself.
 
 ```
 git-paca/bin$ ./git-paca show summarize
@@ -23,12 +31,9 @@ In summary, when you run this tool with a specific Git command (like "git diff")
 
 Git Paca Complete
 
-
-Dogfooding a commitmsg:
 ```
 git-paca/bin$ ./git-paca show commitmsg
-DEBUG Setting num_ctx to 5715
+```
 Refactor Alpaca package to improve request creation and add token counting functionality. Update config handling and constants for clarity. Add tests for new functionalities.
 
 Git Paca Complete
-```
