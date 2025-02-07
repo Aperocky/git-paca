@@ -1,12 +1,33 @@
 ## git-paca
 
-`git-paca` connects to [Ollama](https://ollama.com/) to help you review, generate commit message and summaries on git changes and commits.
+`git-paca` connects to locally ran LLM [Ollama](https://ollama.com/) to help you review, generate commit message and summaries on git changes and commits.
 
 Installation: `go install github.com/Aperocky/git-paca@latest`
 
 Running: `git-paca $git_command (summarize|review|commitmsg)`
 
 For instance: `git-paca diff review`
+
+### configuration
+
+after installation and initial run, the configuration are stored in `~/.config/paca/paca-config.json`
+
+Example (Default) Configuration:
+
+```
+{
+  "url": "http://localhost:11434",
+  "model": "qwen2.5-coder:14b-instruct-q6_K",
+  "maxctx": 32768,
+  "verbose": true,
+  "options": {
+    "num_ctx": 4096,
+    "temperature": 0.3,
+    "top_p": 0.9,
+    "repeat_penalty": 1.1
+  }
+}
+```
 
 ### Dogfooding Showcase
 
