@@ -1,4 +1,4 @@
-.PHONY: build lint
+.PHONY: build lint test
 
 BINARY_NAME=git-paca
 BUILD_DIR=bin
@@ -8,3 +8,6 @@ build:
 
 lint:
 	golangci-lint run
+
+test:
+	go test ./... -v

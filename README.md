@@ -8,6 +8,8 @@ Running: `git-paca $git_command (summarize|review|commitmsg)`
 
 For instance: `git-paca diff review`
 
+![demo](git-paca-demo.gif)
+
 ### configuration
 
 after installation and initial run, the configuration are stored in `~/.config/paca/paca-config.json`
