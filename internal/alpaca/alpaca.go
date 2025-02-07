@@ -40,7 +40,7 @@ func createReq(config *types.PacaConfig, payload string, command string) (*types
 		Model:   config.ModelName,
 		Prompt:  prompt,
 		Stream:  true,
-		Options: config.Options,
+		Options: ollamaOptions,
 	}
 	return reqBody, nil
 }

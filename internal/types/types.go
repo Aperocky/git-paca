@@ -5,7 +5,7 @@ type PacaConfig struct {
 	ModelName string         `json:"model"`
 	MaxCtx    int            `json:"maxctx,omitempty"`
 	Verbose   bool           `json:"verbose,omitempty"`
-	Options   *OllamaOptions `json:"options,omitempty"`
+	Options   *OllamaOptions `json:"options"`
 }
 
 type OllamaRequest struct {

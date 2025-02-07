@@ -74,5 +74,10 @@ func LoadConfig() (*types.PacaConfig, error) {
 	if config.ModelName == "" {
 		return nil, fmt.Errorf("model name cannot be empty")
 	}
+
+	// Avoid null pointer when config does not have options.
+	if config.Options == nil {
+		config.Options = getDefaultOllamaOptions()
+	}
 	return config, nil
 }
