@@ -7,30 +7,48 @@ import (
 	"io"
 	"net/http"
 
-	"github.com/Aperocky/git-paca/internal/config"
+	"github.com/Aperocky/git-paca/internal/types"
 )
-
-type ollamaRequest struct {
-	Model  string `json:"model"`
-	Prompt string `json:"prompt"`
-	Stream bool   `json:"stream"`
-}
 
 type streamResponse struct {
 	Response string `json:"response"`
 	Done     bool   `json:"done"`
 }
 
-func AlpacaStream(config config.PacaConfig, payload string, command string) error {
+func createReq(config *types.PacaConfig, payload string, command string) (*types.OllamaRequest, error) {
 	commandPrompt, exists := promptMap[command]
 	if !exists {
-		return fmt.Errorf("the command does not exist in git-paca")
+		return nil, fmt.Errorf("the command %s does not exist in git-paca", command)
 	}
-	prompt := commandPrompt + "### FOLLOWING IS GIT OUTPUT ###" + payload
-	reqBody := ollamaRequest{
-		Model:  config.ModelName,
-		Prompt: prompt,
-		Stream: true,
+
+	neededCtx := int(float64(CountTokens(payload)) * 1.5)
+	ollamaOptions := config.Options
+	if neededCtx > ollamaOptions.NumCtx {
+		if neededCtx > config.MaxCtx {
+			ollamaOptions.NumCtx = config.MaxCtx
+		} else {
+			ollamaOptions.NumCtx = neededCtx
+		}
+	}
+
+	prompt := commandPrompt + "### GIT OUTPUT ###" + payload
+	if config.Verbose {
+		fmt.Printf("Setting num_ctx to %v\n", ollamaOptions.NumCtx)
+	}
+
+	reqBody := &types.OllamaRequest{
+		Model:   config.ModelName,
+		Prompt:  prompt,
+		Stream:  true,
+		Options: config.Options,
+	}
+	return reqBody, nil
+}
+
+func AlpacaStream(config *types.PacaConfig, payload string, command string) error {
+	reqBody, err := createReq(config, payload, command)
+	if err != nil {
+		return err
 	}
 
 	jsonData, _ := json.Marshal(reqBody)
@@ -60,7 +78,7 @@ func AlpacaStream(config config.PacaConfig, payload string, command string) erro
 		fmt.Print(streamResp.Response)
 
 		if streamResp.Done {
-			fmt.Println("\n\n Git Paca Complete")
+			fmt.Println("\n\nGit Paca Complete")
 			break
 		}
 	}
