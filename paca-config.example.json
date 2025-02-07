@@ -1,4 +1,12 @@
 {
-  "url": "https://localhost:11434",
+  "url": "http://localhost:11434",
   "model": "qwen2.5-coder:14b-instruct-q6_K",
+  "maxctx": 32768,
+  "verbose": false,
+  "options": {
+    "num_ctx": 4096,
+    "temperature": 0.3,
+    "top_p": 0.9,
+    "repeat_penalty": 1.1
+  }
 }
