@@ -17,9 +17,13 @@ func main() {
 
 	flag.Parse()
 	args := flag.Args()
+	if len(args) < 2 {
+		// Handle error case - not enough arguments
+		log.Fatal("Not enough arguments")
+	}
 
-	gitCommand := args[0]
-	pacaCommand := args[1]
+	gitCommand := args[:len(args)-1]
+	pacaCommand := args[len(args)-1]
 
 	result, err := gitcmd.RunGitCmd(gitCommand)
 	if err != nil {

@@ -5,19 +5,13 @@ import (
 	"os"
 	"os/exec"
 	"path/filepath"
-	"strings"
 )
 
-func RunGitCmd(command string) ([]byte, error) {
+func RunGitCmd(args []string) ([]byte, error) {
 	// Find git root
 	gitRoot, err := findGitRoot()
 	if err != nil {
 		return nil, err
-	}
-
-	args := strings.Fields(command)
-	if len(args) == 0 {
-		return nil, fmt.Errorf("empty git command")
 	}
 
 	cmd := exec.Command("git", args...)

@@ -1,18 +1,29 @@
 ## git-paca
 
+`git-paca` connects to [Ollama](https://ollama.com/) to help you review, generate commit message and summaries on git changes and commits.
+
 Installation: `go install github.com/Aperocky/git-paca@latest`
 
 Running: `git-paca $git_command (summarize|review|commitmsg)`
 
-For instance: `git-paca diff review`, `git-paca diff commitmsg`
+For instance: `git-paca diff review`
 
 ### Dogfooding Showcase
 
-Commit messages for this package will come from itself.
+Commit messages for this package have come from itself.
+
+*git-paca creating a commit message:*
+
+```
+$ ./git-paca diff --cached commitmsg
+chore: Update RunGitCmd to accept []string and improve argument handling in main.go
+
+Git Paca Complete
+```
+*git-paca summarize its initial commit:*
 
 ```
 git-paca/bin$ ./git-paca show summarize
-```
 This code is a command-line tool named `git-paca` which integrates with Git and an AI model for automating commit messages, summarizing changes, or reviewing them based on the git repository's history. Here's a breakdown of its components:
 
 1. **main.go**: The entry point of the application. It defines flags to accept two arguments from the user - the Git command (`gitCmd`) and the type of AI operation (`pacaCommand`).
@@ -30,10 +41,4 @@ This code is a command-line tool named `git-paca` which integrates with Git and 
 In summary, when you run this tool with a specific Git command (like "git diff") and specify what kind of AI operation you want ("review", "summarize", etc.), it will execute that Git command inside your repository, send its output to an AI model via HTTP, and then display the result back to you. The configuration can be customized by editing the paca-config.json file if needed.
 
 Git Paca Complete
-
 ```
-git-paca/bin$ ./git-paca show commitmsg
-```
-Refactor Alpaca package to improve request creation and add token counting functionality. Update config handling and constants for clarity. Add tests for new functionalities.
-
-Git Paca Complete
