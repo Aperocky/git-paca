@@ -1,6 +1,6 @@
 ## git-paca
 
-Dogfooding a readme:
+Dogfooding a summarization on the initial commit:
 
 ```
 git-paca/bin$ ./git-paca show summarize
@@ -21,4 +21,14 @@ This code is a command-line tool named `git-paca` which integrates with Git and 
 
 In summary, when you run this tool with a specific Git command (like "git diff") and specify what kind of AI operation you want ("review", "summarize", etc.), it will execute that Git command inside your repository, send its output to an AI model via HTTP, and then display the result back to you. The configuration can be customized by editing the paca-config.json file if needed.
 
- Git Paca Complete
+Git Paca Complete
+
+
+Dogfooding a commitmsg:
+```
+git-paca/bin$ ./git-paca show commitmsg
+DEBUG Setting num_ctx to 5715
+Refactor Alpaca package to improve request creation and add token counting functionality. Update config handling and constants for clarity. Add tests for new functionalities.
+
+Git Paca Complete
+```
