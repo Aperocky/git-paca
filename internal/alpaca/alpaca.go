@@ -20,8 +20,9 @@ func createReq(config *types.PacaConfig, payload string, command string) (*types
 	if !exists {
 		return nil, fmt.Errorf("the command %s does not exist in git-paca", command)
 	}
+	prompt := GitPrimer + commandPrompt + "### GIT OUTPUT ###" + payload
 
-	neededCtx := int(float64(CountTokens(payload)) * 1.5)
+	neededCtx := int(float64(CountTokens(prompt)) * 1.5)
 	ollamaOptions := config.Options
 	if neededCtx > ollamaOptions.NumCtx {
 		if neededCtx > config.MaxCtx {
@@ -31,7 +32,6 @@ func createReq(config *types.PacaConfig, payload string, command string) (*types
 		}
 	}
 
-	prompt := commandPrompt + "### GIT OUTPUT ###" + payload
 	if config.Verbose {
 		fmt.Printf("Setting num_ctx to %v\n", ollamaOptions.NumCtx)
 	}
@@ -39,6 +39,7 @@ func createReq(config *types.PacaConfig, payload string, command string) (*types
 	reqBody := &types.OllamaRequest{
 		Model:   config.ModelName,
 		Prompt:  prompt,
+		System:  GitSystemPrompt,
 		Stream:  true,
 		Options: ollamaOptions,
 	}

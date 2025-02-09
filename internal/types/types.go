@@ -11,6 +11,7 @@ type PacaConfig struct {
 type OllamaRequest struct {
 	Model   string         `json:"model"`
 	Prompt  string         `json:"prompt"`
+	System  string         `json:"system"`
 	Stream  bool           `json:"stream"`
 	Options *OllamaOptions `json:"options,omitempty"`
 }
