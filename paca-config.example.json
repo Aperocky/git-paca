@@ -1,6 +1,6 @@
 {
   "url": "http://localhost:11434",
-  "model": "qwen2.5-coder:14b-instruct-q6_K",
+  "model": "deepseek-coder-v2:latest",
   "maxctx": 32768,
   "verbose": false,
   "options": {

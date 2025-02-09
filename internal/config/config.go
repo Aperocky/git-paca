@@ -11,8 +11,8 @@ import (
 
 const (
 	defaultUrl       = "http://localhost:11434"
-	defaultModelName = "qwen2.5-coder:14b-instruct-q6_K"
-	defaultMaxCtx    = 4096
+	defaultModelName = "deepseek-coder-v2:latest"
+	defaultMaxCtx    = 8192
 )
 
 func getDefaultConfig() *types.PacaConfig {
