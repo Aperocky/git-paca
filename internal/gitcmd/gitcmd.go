@@ -2,10 +2,24 @@ package gitcmd
 
 import (
 	"fmt"
+	"log"
 	"os"
 	"os/exec"
 	"path/filepath"
+	"slices"
 )
+
+const (
+	GitCommandDiff = "diff"
+	GitCommandShow = "show"
+)
+
+// Currently only supporting diff and show
+// For review/commitmsg and summary
+var supportedGitCommands = []string{
+	GitCommandDiff,
+	GitCommandShow,
+}
 
 func RunGitCmd(args []string) ([]byte, error) {
 	// Find git root
@@ -14,6 +28,9 @@ func RunGitCmd(args []string) ([]byte, error) {
 		return nil, err
 	}
 
+	if !slices.Contains(supportedGitCommands, args[0]) {
+		log.Fatalf("Only supporting git commands %v", supportedGitCommands)
+	}
 	cmd := exec.Command("git", args...)
 	cmd.Dir = gitRoot
 	return cmd.CombinedOutput()

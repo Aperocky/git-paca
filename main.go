@@ -32,6 +32,6 @@ func main() {
 
 	err = alpaca.AlpacaStream(config, string(result), pacaCommand)
 	if err != nil {
-		log.Fatalf("Paca not connect to llama: %v", err)
+		log.Fatalf("Error executing git-paca: %v", err)
 	}
 }
