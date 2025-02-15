@@ -65,6 +65,11 @@ func AlpacaStream(config *types.PacaConfig, payload string, command string) erro
 	}
 	defer resp.Body.Close()
 
+	if resp.StatusCode != http.StatusOK {
+		body, _ := io.ReadAll(resp.Body)
+		return fmt.Errorf("server returned error %d %s: %s", resp.StatusCode, resp.Status, string(body))
+	}
+
 	decoder := json.NewDecoder(resp.Body)
 
 	for {

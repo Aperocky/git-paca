@@ -18,7 +18,7 @@ Example (Default) Configuration:
 
 ```
 {
-  "url": "http://localhost:11434",
+  "url": "http://localhost:11434/api/generate",
   "model": "qwen2.5-coder:14b-instruct-q6_K",
   "maxctx": 32768,
   "verbose": true,
