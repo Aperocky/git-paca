@@ -20,7 +20,7 @@ func createReq(config *types.PacaConfig, payload string, command string) (*types
 	if !exists {
 		return nil, fmt.Errorf("the command %s does not exist in git-paca", command)
 	}
-	prompt := GitPrimer + commandPrompt + "### GIT OUTPUT ###" + payload
+	prompt := commandPrompt + "### GIT DIFF output ###" + payload
 
 	neededCtx := int(float64(CountTokens(prompt)) * 1.5)
 	ollamaOptions := config.Options
@@ -53,8 +53,7 @@ func AlpacaStream(config *types.PacaConfig, payload string, command string) erro
 	}
 
 	jsonData, _ := json.Marshal(reqBody)
-	url := fmt.Sprintf("%s/api/generate", config.Url)
-	req, err := http.NewRequest("POST", url, bytes.NewBuffer(jsonData))
+	req, err := http.NewRequest("POST", config.Url, bytes.NewBuffer(jsonData))
 	if err != nil {
 		return fmt.Errorf("error creating request: %w", err)
 	}

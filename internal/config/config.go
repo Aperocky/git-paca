@@ -10,7 +10,7 @@ import (
 )
 
 const (
-	defaultUrl       = "http://localhost:11434"
+	defaultUrl       = "http://localhost:11434/api/generate"
 	defaultModelName = "deepseek-coder-v2:latest"
 	defaultMaxCtx    = 8192
 )

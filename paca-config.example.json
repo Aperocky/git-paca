@@ -1,5 +1,5 @@
 {
-  "url": "http://localhost:11434",
+  "url": "http://localhost:11434/api/generate",
   "model": "deepseek-coder-v2:latest",
   "maxctx": 32768,
   "verbose": false,
