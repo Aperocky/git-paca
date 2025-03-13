@@ -4,9 +4,7 @@
 
 Installation: `go install github.com/Aperocky/git-paca@latest`
 
-Running: `git-paca $git_command (summarize|review|commitmsg)`
-
-For instance: `git-paca diff review`
+Running: `git-paca <git_commands..> <summarize|review|commitmsg|custom> [extra_prompts]`
 
 ![demo](git-paca-demo.gif)
 
@@ -29,6 +27,16 @@ Example (Default) Configuration:
     "repeat_penalty": 1.1
   }
 }
+```
+
+### Usage Examples
+
+```
+git-paca diff review
+git-paca diff summarize
+git-paca diff --cached commitmsg
+git-paca diff review "with an emphasis on simplicity"
+git-paca show custom "Find all typos and wording problems in this commit"
 ```
 
 ### Dogfooding Showcase
