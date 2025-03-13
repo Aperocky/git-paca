@@ -10,19 +10,30 @@ import (
 	"github.com/Aperocky/git-paca/internal/types"
 )
 
+const (
+	TokenMultiplier = 2.0
+	CustomHeader    = "Analyze the following git diff with these instructions: "
+)
+
 type streamResponse struct {
 	Response string `json:"response"`
 	Done     bool   `json:"done"`
 }
 
-func createReq(config *types.PacaConfig, payload string, command string) (*types.OllamaRequest, error) {
-	commandPrompt, exists := promptMap[command]
-	if !exists {
-		return nil, fmt.Errorf("the command %s does not exist in git-paca", command)
+func createReq(config *types.PacaConfig, payload string, cmdArgs *types.CommandArguments) (*types.OllamaRequest, error) {
+	var prompt string
+	if cmdArgs.PacaCommand == CustomCommand {
+		prompt = CustomHeader + cmdArgs.ExtraPrompt + "\n"
+	} else {
+		commandPrompt := PromptMap[cmdArgs.PacaCommand]
+		prompt = commandPrompt + "\n" + payload
+		if cmdArgs.ExtraPrompt != "" {
+			prompt += "\n" + "with these additional instructions: " + cmdArgs.ExtraPrompt
+		}
 	}
-	prompt := commandPrompt + "### GIT DIFF output ###" + payload
 
-	neededCtx := int(float64(CountTokens(prompt)) * 1.5)
+	neededCtx := int(float64(CountTokens(prompt)) * TokenMultiplier)
+
 	ollamaOptions := config.Options
 	if neededCtx > ollamaOptions.NumCtx {
 		if neededCtx > config.MaxCtx {
@@ -33,21 +44,22 @@ func createReq(config *types.PacaConfig, payload string, command string) (*types
 	}
 
 	if config.Verbose {
+		fmt.Println(prompt)
+		fmt.Printf("Prompt has %v tokens\n", CountTokens(prompt))
 		fmt.Printf("Setting num_ctx to %v\n", ollamaOptions.NumCtx)
 	}
 
 	reqBody := &types.OllamaRequest{
 		Model:   config.ModelName,
 		Prompt:  prompt,
-		System:  GitSystemPrompt,
 		Stream:  true,
 		Options: ollamaOptions,
 	}
 	return reqBody, nil
 }
 
-func AlpacaStream(config *types.PacaConfig, payload string, command string) error {
-	reqBody, err := createReq(config, payload, command)
+func AlpacaStream(config *types.PacaConfig, payload string, cmdArgs *types.CommandArguments) error {
+	reqBody, err := createReq(config, payload, cmdArgs)
 	if err != nil {
 		return err
 	}

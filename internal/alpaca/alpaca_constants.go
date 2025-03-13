@@ -1,13 +1,11 @@
 package alpaca
 
 const (
-	GitSystemPrompt = `You are an git analysis assistant, understanding that (+) indicates additions, (-) indicates deletions, and surrounding lines provide context for the changes.`
-
 	SummaryCommand = "summarize"
-	SummaryPrompt  = `Analyze the following GIT DIFF output and provide a focused summary (max 150 words) highlighting key modifications and their potential impact.`
+	SummaryPrompt  = `Analyze the following git diff output and provide a focused summary (max 150 words) highlighting key modifications and their potential impact.`
 
 	ReviewCommand = "review"
-	ReviewPrompt  = `Analyze following GIT DIFF output and report genuine concerns in any of these areas:
+	ReviewPrompt  = `Analyze following git diff output and report genuine concerns in any of these areas:
 
 1. Critical Issues: Bugs, breaking changes, security issues
 2. Performance: Bottlenecks, inefficient patterns
@@ -17,11 +15,14 @@ const (
 Skip categories with no issues. Multiple issues per category may be reported.`
 
 	CommitMsgCommand = "commitmsg"
-	CommitMsgPrompt  = `Generate a conventional commit message (<type>(?<scope>): <description>) using feat/fix/docs/style/refactor/test/chore/perf, imperative mood, make concise but complete description of the following GIT DIFF output (max 50 words, output only commit message).`
+	CommitMsgPrompt  = `Generate a conventional commit message (<type>(?<scope>): <description>) using feat/fix/docs/style/refactor/test/chore/perf, imperative mood, make concise but complete description of the following git diff output (max 50 words, output only commit message).`
+
+	CustomCommand = "custom"
 )
 
-var promptMap = map[string]string{
+var PromptMap = map[string]string{
 	SummaryCommand:   SummaryPrompt,
 	ReviewCommand:    ReviewPrompt,
 	CommitMsgCommand: CommitMsgPrompt,
+	CustomCommand:    "",
 }

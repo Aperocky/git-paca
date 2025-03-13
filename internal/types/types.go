@@ -23,3 +23,9 @@ type OllamaOptions struct {
 	TopK          int     `json:"top_k,omitempty"`
 	RepeatPenalty float64 `json:"repeat_penalty,omitempty"`
 }
+
+type CommandArguments struct {
+	GitCommands []string
+	PacaCommand string
+	ExtraPrompt string
+}
